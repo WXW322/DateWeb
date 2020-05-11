@@ -1,5 +1,6 @@
 package com.yueba.yueba.controller;
 
+import com.google.common.collect.Maps;
 import com.yueba.yueba.common.JsonResult;
 import com.yueba.yueba.model.User;
 import com.yueba.yueba.service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,7 +36,7 @@ public class UserController {
     @Autowired
     private UserVipService userVipService;
 
-    public  String fileUploadPath;
+    public String fileUploadPath;
 
     @Value("${fileUpload}")
     public void setFileUpload(String fileUpload) {
@@ -42,9 +44,19 @@ public class UserController {
     }
 
     @RequestMapping("/queryAll")
-    @ApiOperation(value = "根据用户Id获取所有的用户基本信息", notes = "不同角色的返回数据量不同 普通用户10条 会员30条 ")
-    public JsonResult queryAll() {
-        return JsonResult.ok(userService.queryAll());
+    @ApiOperation(value = "根据用户Id获取所有的用户基本信息,例如userId = 1 ", notes = "不同角色的返回数据量不同 普通用户10条 会员30条 ")
+    public JsonResult queryAll(Long userId) {
+        Map<String, String> paramMap = Maps.newHashMap();
+        if (userId == null) {
+            return JsonResult.errorMsg("参数不正确");
+        }
+        val user = userService.selectOneById(userId);
+        if (user == null) {
+            return JsonResult.errorMsg("当前用户不存在");
+        }
+        paramMap.put("role", String.valueOf(user.getRole()));
+
+        return JsonResult.ok(userService.queryAll(paramMap));
     }
 
     @PostMapping("/edit")
@@ -100,8 +112,4 @@ public class UserController {
         userVipService.updateStatus(userId);
         return JsonResult.ok();
     }
-
-
-
-
 }
