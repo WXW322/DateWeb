@@ -29,6 +29,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         //映射本地服务器上的图片到url上
         registry.addResourceHandler("/image/**").
-                addResourceLocations("file:/Users/xuyuanfeng/image/");
+                addResourceLocations(mvcFileUpload);
     }
 }
