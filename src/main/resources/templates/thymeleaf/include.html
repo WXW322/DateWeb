@@ -1,0 +1,53 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link th:href="@{/static/css/bootstrap.min14ed.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/plugins/bootstrap-treetable/bootstrap-treetable.css}" rel="stylesheet"/>
+    <link th:href="@{/static/plugins/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/css/font-awesome.min93e3.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/style.min862f.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/css/select.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/xuan.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/fakeLoader.css}" rel="stylesheet">
+</head>
+<div th:fragment="footer">
+    <a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()} + '/'"
+       id="contextPath"></a>
+    <!-- 全局js -->
+    <script th:src="@{/static/js/jquery.min.js}"></script>
+    <script th:src="@{/static/plugins/layer/layer.js}"></script>
+    <!--日期控件 -->
+    <script th:src="@{/static/plugins/laydate/laydate.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/contabs.js}"></script>
+    <script th:src="@{/static/js/fakeLoader.min.js}"></script>
+    <!-- Bootstrap table -->
+    <script th:src="@{/static/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- 自定义js -->
+    <!-- <script th:inline="javascript"> var ctx = [[@{/}]]; </script> -->
+    <script th:inline="javascript"> var ctx = $('#contextPath').attr('href'); </script>
+    <script th:src="@{/static/utils/utils.js}"></script>
+    <!-- jquery-validate 表单验证插件 -->
+    <script th:src="@{/static/plugins/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/static/plugins/validate/messages_zh.min.js}"></script>
+    <script th:src="@{/static/plugins/validate/jquery.validate.extend.js}"></script>
+    <!-- jquery-export 表格导出插件 -->
+    <script th:src="@{/static/plugins/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-table/extensions/export/tableExport.js}"></script>
+    <!--全屏js-->
+    <script th:src="@{/static/plugins/fullscreen/jquery.fullscreen.js}"></script>
+    <script th:src="@{/static/utils/xuan.js}"></script>
+    <script th:src="@{/static/utils/ry-ui.js}"></script>
+</div>

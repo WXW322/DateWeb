@@ -30,11 +30,6 @@ public class UserService {
     public List<UserVo> queryAll(Map<String,String> paramMap) {
         int role = Integer.parseInt(Optional.ofNullable(paramMap.get("role")).orElse("0"));
         val queryWrappers = Wrappers.<User>lambdaQuery();
-
-
-
-
-
         //普通用户10条
         if (role == RoleEnum.USER.getRole()) {
             queryWrappers.last("limit 10");

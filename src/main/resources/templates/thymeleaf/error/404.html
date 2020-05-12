@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="middle-box text-center animated fadeInDown">
+    <h1>404</h1>
+    <h3 class="font-bold">找不到页面！</h3>
+
+    <div class="error-desc">
+        找不到页面。我们抱歉。您可以返回主页面。
+        <a href="javascript:top.document.location.href='/'" class="btn btn-primary m-t">主页</a>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+</body>
+</html>

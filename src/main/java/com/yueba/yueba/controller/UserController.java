@@ -11,9 +11,10 @@ import lombok.val;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
@@ -27,7 +28,7 @@ import java.util.UUID;
  * @date 2020/5/10
  * @description
  **/
-@RestController
+@Controller
 @RequestMapping("/api/user")
 @ApiModel(value = "用户相关接口")
 public class UserController {
@@ -43,6 +44,7 @@ public class UserController {
         fileUploadPath = fileUpload;
     }
 
+    @ResponseBody
     @RequestMapping("/queryAll")
     @ApiOperation(value = "根据用户Id获取所有的用户基本信息,例如userId = 1 ", notes = "不同角色的返回数据量不同 普通用户10条 会员30条 ")
     public JsonResult queryAll(Long userId) {
@@ -59,6 +61,7 @@ public class UserController {
         return JsonResult.ok(userService.queryAll(paramMap));
     }
 
+    @ResponseBody
     @PostMapping("/edit")
     @ApiOperation(value = "编辑用户基本信息", notes = "编辑用户基本信息 上传用户头像  修改名称  修改其他资料")
     public JsonResult upload(Long id, String nickname, Integer male,
@@ -84,6 +87,7 @@ public class UserController {
         return JsonResult.ok();
     }
 
+    @ResponseBody
     @RequestMapping("/beVip")
     @ApiOperation(value = "申请会员")
     public JsonResult beVip(Long userId) {
@@ -94,12 +98,14 @@ public class UserController {
         return JsonResult.ok("请不要重复提交");
     }
 
+    @ResponseBody
     @RequestMapping("/queryAllUserVip")
     @ApiOperation(value = "查询所有的用户申请信息")
     public JsonResult queryAllUserVip() {
         return JsonResult.ok(userVipService.queryAll());
     }
 
+    @ResponseBody
     @RequestMapping("/beVipPass")
     @ApiOperation(value = "通过用户会员信息")
     public JsonResult beVipPass(Long userId) {
@@ -111,5 +117,12 @@ public class UserController {
         userService.update(user);
         userVipService.updateStatus(userId);
         return JsonResult.ok();
+    }
+
+
+    @RequestMapping("/profile")
+    @ApiOperation(value = "用户详情页面")
+    public String profile(Long userId) {
+        return "/user/profile";
     }
 }

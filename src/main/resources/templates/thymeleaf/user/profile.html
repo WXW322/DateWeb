@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:51 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>约吧首页</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/static/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+</head>
+<body class="gray-bg top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="#" class="navbar-brand">约吧同城</a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
+                               data-toggle="dropdown"> 约吧 <span class="caret"></span></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
+                               data-toggle="dropdown"> 搜索 <span class="caret"></span></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
+                               data-toggle="dropdown"> 会员 <span class="caret"></span></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
+                               data-toggle="dropdown"> 活动<span class="caret"></span></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                                <li><a href="#">菜单列表</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="login">
+                                <i class="fa fa-sign-out"></i> 登陆
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <div class="col-sm-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>个人信息</h5>
+                            <div class="ibox-tools">
+
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="profile.html#">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="javascript:edit()">修改信息</a></li>
+                                    <li><a href="javascript:resetPwd()">修改密码</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="contact-box">
+                            <div class="col-sm-4">
+                                <div class="text-center">
+                                    <img alt="image" class="img-circle m-t-xs img-responsive" th:src="@{/static/img/a2.jpg}">
+                                    <div class="m-t-xs font-bold">127.0.0.1</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <h3><strong>admin</strong></h3>
+                                <p><i class="fa fa-user"></i> xuyuanfeng / 管理员
+                                <p><i class="fa fa-phone"></i> 15888888888</p>
+                                <p><i class="fa fa-group"></i> 研发部门 </p>
+                                <p><i class="fa fa-transgender"></i> 性别：男</p>
+                                <p><i class="fa fa-envelope-o"></i> 986771570@qq.com</p>
+                                <p><i class="fa fa-calendar"></i> 2018-03-16 11:33:00</p>
+                            </div>
+                            <div class="clearfix"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+            </div>
+            <div>
+                <strong>Copyright</strong> 约吧 &copy; 2020
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/static/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.resize.js}"></script>
+<script th:src="@{/static/js/plugins/peity/jquery.peity.min.js}"></script>
+</body>
+</html>
