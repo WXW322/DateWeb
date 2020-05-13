@@ -28,4 +28,5 @@ public class UserVo {
     private int money;
     private int height;
     private String description;
+    private String major;
 }

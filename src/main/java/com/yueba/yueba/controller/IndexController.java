@@ -3,6 +3,8 @@ package com.yueba.yueba.controller;
 import com.yueba.yueba.common.ImageCodeUtils;
 import com.yueba.yueba.model.SysMenu;
 import com.yueba.yueba.service.SystemMenuService;
+import com.yueba.yueba.service.UserService;
+import com.yueba.yueba.service.UserVipService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private SystemMenuService menuService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/login")
     @ApiOperation(value = "登陆页面", notes = "登陆页面")
@@ -46,7 +50,8 @@ public class IndexController {
      */
     @RequestMapping("")
     @ApiOperation(value = "首页", notes = "首页")
-    public String main() {
+    public String main(ModelMap modelMap) {
+        modelMap.put("users", userService.queryAll());
         return "index2";
     }
 
@@ -71,8 +76,8 @@ public class IndexController {
     @RequestMapping("index2")
     @ApiOperation(value = "首页", notes = "首页")
     public String index2(ModelMap modelMap) {
-        List<SysMenu> menus = menuService.selectAllMenus();
-        modelMap.put("menus", menus);
+
+        modelMap.put("users", userService.queryAll());
         return "index2";
     }
 

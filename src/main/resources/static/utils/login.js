@@ -7,27 +7,29 @@ function login() {
     var password = $("#password").val();
     var salt = new Date().getTime();
     var verifyCode = $("#verifyCode").val();
-    $.ajax({
-        url: ctx + "/loginSubmit",
-        method: "post",
-        timeout: 2000, //通过timeout属性，设置超时时间
-        data: {username: name, password: password, salt: salt, verifyCode: verifyCode},
-        success: function (resp) {
-            layer.close(index);
-            if (resp.status == 200) {
-                window.location.href = ctx ;
-            } else {
-                changeCode();
-                layer.msg(resp.msg);
-            }
-        },
-        complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
-            if (status == 'timeout') {//超时,status还有success,error等值的情况
-                layer.close(index);
-                layer.msg('请求超时');
-            }
-        }
-    })
+    window.location.href = ctx + "/index";
+
+    // $.ajax({
+    //     url: ctx + "/loginSubmit",
+    //     method: "post",
+    //     timeout: 2000, //通过timeout属性，设置超时时间
+    //     data: {username: name, password: password, salt: salt, verifyCode: verifyCode},
+    //     success: function (resp) {
+    //         layer.close(index);
+    //         if (resp.status == 200) {
+    //             window.location.href = ctx ;
+    //         } else {
+    //             changeCode();
+    //             layer.msg(resp.msg);
+    //         }
+    //     },
+    //     complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+    //         if (status == 'timeout') {//超时,status还有success,error等值的情况
+    //             layer.close(index);
+    //             layer.msg('请求超时');
+    //         }
+    //     }
+    // })
 }
 
 //提交表单登陆
@@ -43,6 +45,7 @@ $(document).keydown(function (event) {
 $("#logout").click(function (e) {
     window.location.href = ctx + "/login"
 })
+
 function changeCode() {
     //点击刷新验证码
     var img = document.getElementsByTagName("img")[0];

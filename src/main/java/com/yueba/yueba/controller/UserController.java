@@ -12,6 +12,8 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,20 +46,10 @@ public class UserController {
         fileUploadPath = fileUpload;
     }
 
-    @ResponseBody
     @RequestMapping("/queryAll")
     @ApiOperation(value = "根据用户Id获取所有的用户基本信息,例如userId = 1 ", notes = "不同角色的返回数据量不同 普通用户10条 会员30条 ")
-    public JsonResult queryAll(Long userId) {
+    public JsonResult queryAll() {
         Map<String, String> paramMap = Maps.newHashMap();
-        if (userId == null) {
-            return JsonResult.errorMsg("参数不正确");
-        }
-        val user = userService.selectOneById(userId);
-        if (user == null) {
-            return JsonResult.errorMsg("当前用户不存在");
-        }
-        paramMap.put("role", String.valueOf(user.getRole()));
-
         return JsonResult.ok(userService.queryAll(paramMap));
     }
 
@@ -86,7 +78,6 @@ public class UserController {
         userService.update(user);
         return JsonResult.ok();
     }
-
     @ResponseBody
     @RequestMapping("/beVip")
     @ApiOperation(value = "申请会员")
@@ -97,7 +88,6 @@ public class UserController {
         }
         return JsonResult.ok("请不要重复提交");
     }
-
     @ResponseBody
     @RequestMapping("/queryAllUserVip")
     @ApiOperation(value = "查询所有的用户申请信息")
@@ -118,11 +108,17 @@ public class UserController {
         userVipService.updateStatus(userId);
         return JsonResult.ok();
     }
-
-
-    @RequestMapping("/profile")
+    @RequestMapping("/profile/{userId}")
     @ApiOperation(value = "用户详情页面")
-    public String profile(Long userId) {
+    public String profile(@PathVariable Long userId, ModelMap modelMap) {
+        if (userId == null) {
+            return "/error/500";
+        }
+        val user = userService.selectOneById(userId);
+        if (user == null) {
+            return "/error/500";
+        }
+        modelMap.put("user", user);
         return "/user/profile";
     }
 }

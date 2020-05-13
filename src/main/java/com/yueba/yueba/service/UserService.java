@@ -27,7 +27,7 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<UserVo> queryAll(Map<String,String> paramMap) {
+    public List<UserVo> queryAll(Map<String, String> paramMap) {
         int role = Integer.parseInt(Optional.ofNullable(paramMap.get("role")).orElse("0"));
         val queryWrappers = Wrappers.<User>lambdaQuery();
         //普通用户10条
@@ -40,6 +40,17 @@ public class UserService {
         }
 
         List<User> userList = userMapper.selectList(queryWrappers);
+        List<UserVo> userVos = Lists.newArrayList();
+        userList.stream().forEach(user -> {
+            UserVo userVo = new UserVo();
+            BeanUtils.copyProperties(user, userVo);
+            userVos.add(userVo);
+        });
+        return userVos;
+    }
+
+    public List<UserVo> queryAll() {
+        List<User> userList = userMapper.selectList(null);
         List<UserVo> userVos = Lists.newArrayList();
         userList.stream().forEach(user -> {
             UserVo userVo = new UserVo();
