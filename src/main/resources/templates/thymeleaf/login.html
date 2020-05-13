@@ -17,9 +17,8 @@
     <![endif]-->
     <script>
         if (window.top !== window.self) {
-            window.top.location = window.location
+            window.top.location = window.location;
         }
-        ;
     </script>
 </head>
 <body class="signin">
@@ -46,7 +45,10 @@
                                                 src="/imageCode" id="verifyCodeImage"
                                                 onclick="changeCode()"/> <span>
 						</span>
-
+                <select class="form-control" style="color:black" id="role">
+                    <option value ="0">用户登陆</option>
+                    <option value ="1">管理员登陆</option>
+                </select>
                 <button class="btn btn-success btn-block" type="button" id="submit">登录</button>
             </form>
         </div>

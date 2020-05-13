@@ -436,7 +436,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 	margin-top: 0
 }
 .top-navigation .navbar-brand {
-	background: #1ab394;
+	background: #856df1;
 	color: #fff;
 	padding: 15px 25px
 }
@@ -500,10 +500,10 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 	min-width: 120px
 }
 .btn-primary.btn-outline {
-	color: #1ab394
+	color: #856df1
 }
 .btn-success.btn-outline {
-	color: #1c84c6
+	color: #856df1
 }
 .btn-info.btn-outline {
 	color: #23c6c8
@@ -518,7 +518,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 	color: #fff
 }
 .btn-primary {
-	background-color: #1ab394;
+	background-color: #856df1;
 	border-color: #1ab394;
 	color: #FFF
 }
@@ -2446,7 +2446,8 @@ video {
 	padding: 0 20px
 }
 .wrapper-content {
-	padding: 20px
+	padding: 20px;
+	background-image: url("/static/img/banner2.7871cd1.jpg");
 }
 #page-wrapper {
 	padding: 0 15px;

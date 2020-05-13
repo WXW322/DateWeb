@@ -15,67 +15,14 @@
 <body class="gray-bg top-navigation">
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom white-bg">
-            <nav class="navbar navbar-static-top" role="navigation">
-                <div class="navbar-header">
-                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
-                            class="navbar-toggle collapsed" type="button">
-                        <i class="fa fa-reorder"></i>
-                    </button>
-                    <a href="/" class="navbar-brand">约吧同城</a>
-                </div>
-                <div class="navbar-collapse collapse" id="navbar">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a aria-expanded="false" role="button" href="/" class="dropdown-toggle"
-                               > 约吧 <span class="caret"></span></a>
-                            <ul role="menu" class="dropdown-menu">
-
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
-                               > 搜索 <span class="caret"></span></a>
-                            <ul role="menu" class="dropdown-menu">
-
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
-                               > 会员 <span class="caret"></span></a>
-                            <ul role="menu" class="dropdown-menu">
-
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"
-                               > 活动<span class="caret"></span></a>
-                            <ul role="menu" class="dropdown-menu">
-
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a href="/login">
-                                <i class="fa fa-sign-out"></i> 登陆
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+        <div th:include="include :: container"></div>
         <div class="wrapper wrapper-content">
             <div class="container">
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5>个人信息</h5>
                             <div class="ibox-tools">
-
-                                <a class="dropdown-toggle"  href="profile.html#">
-                                    <i class="fa fa-edit"></i>
-                                </a>
                                 <ul class="dropdown-menu dropdown-user">
                                     <li><a href="javascript:edit()">修改信息</a></li>
                                     <li><a href="javascript:resetPwd()">修改密码</a></li>
@@ -94,10 +41,11 @@
                                 <h3><strong th:text="${user.nickname}"></strong></h3>
                                 <p><i class="fa fa-user"> 居住地:<span th:text="${user.location}"></span></i>
                                 <p><i class="fa fa-angellist"></i> 年龄:<span th:text="${user.age}"></span> </p>
+                                <p><i class="fa fa-male"></i> 性别:<span th:text="${user.male==1?'女':'男'}"></span></p>
                                 <p><i class="fa fa-group"></i> 身高:<span th:text="${user.height}"></span> </p>
                                 <p><i class="fa fa-money"></i> 收入:<span th:text="${user.money}"></span></p>
-                                <p><i class="fa fa-male"></i> 性别:<span th:text="${user.male==1?'女':'男'}"></span></p>
-                                <p><i class="fa fa-calendar"></i> 描述:<span th:text="${user.description}"></span></p>
+                                <p><i class="fa fa-apple"></i> 是否是尊享VIP:<span th:text="${user.role==1?'是':'否'}"></span></p>
+                                <p><i class="fa fa-volume-up"></i> 描述:<span th:text="${user.description}"></span></p>
                             </div>
                             <div class="clearfix"></div>
                             </a>

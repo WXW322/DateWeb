@@ -7,8 +7,12 @@ function login() {
     var password = $("#password").val();
     var salt = new Date().getTime();
     var verifyCode = $("#verifyCode").val();
-    window.location.href = ctx + "/index";
-
+    var role = $("#role").val();
+    if (role == 1) {
+        window.location.href = ctx + "index";
+    } else {
+        window.location.href = ctx + "index2";
+    }
     // $.ajax({
     //     url: ctx + "/loginSubmit",
     //     method: "post",

@@ -4,7 +4,6 @@ import com.yueba.yueba.common.ImageCodeUtils;
 import com.yueba.yueba.model.SysMenu;
 import com.yueba.yueba.service.SystemMenuService;
 import com.yueba.yueba.service.UserService;
-import com.yueba.yueba.service.UserVipService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.yueba.yueba.mapper")
 public class YuebaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(YuebaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(YuebaApplication.class, args);
+    }
 
 }
