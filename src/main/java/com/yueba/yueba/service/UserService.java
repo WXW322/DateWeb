@@ -2,6 +2,7 @@ package com.yueba.yueba.service;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
+import com.yueba.yueba.common.CommonUtils;
 import com.yueba.yueba.mapper.UserMapper;
 import com.yueba.yueba.model.User;
 import com.yueba.yueba.model.enumm.RoleEnum;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -29,7 +31,7 @@ public class UserService {
 
     public List<UserVo> queryAll(Map<String, String> paramMap) {
         int role = Integer.parseInt(Optional.ofNullable(paramMap.get("role")).orElse("0"));
-        val queryWrappers = Wrappers.<User>lambdaQuery();
+        val queryWrappers = Wrappers.<User>lambdaQuery().ne(User::getRole, 2);
         //普通用户10条
         if (role == RoleEnum.USER.getRole()) {
             queryWrappers.last("limit 10");
@@ -38,7 +40,6 @@ public class UserService {
         else if (role == RoleEnum.SUPER_USER.getRole()) {
             queryWrappers.last("limit 30");
         }
-
         List<User> userList = userMapper.selectList(queryWrappers);
         List<UserVo> userVos = Lists.newArrayList();
         userList.stream().forEach(user -> {
@@ -50,7 +51,8 @@ public class UserService {
     }
 
     public List<UserVo> queryAll() {
-        List<User> userList = userMapper.selectList(null);
+        val queryWrappers = Wrappers.<User>lambdaQuery().ne(User::getRole, 2);
+        List<User> userList = userMapper.selectList(queryWrappers);
         List<UserVo> userVos = Lists.newArrayList();
         userList.stream().forEach(user -> {
             UserVo userVo = new UserVo();
@@ -67,5 +69,21 @@ public class UserService {
 
     public User selectOneById(Long userId) {
         return userMapper.selectById(userId);
+    }
+
+    public boolean checkLogin(String username, String password, Integer role) {
+        val user = userMapper.selectOneByUserNameAndRole(username, role);
+        if (user == null) {
+            return false;
+        }
+        if ((CommonUtils.calculateMD5(user.getSalt() + password)).equalsIgnoreCase(user.getPassword())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public User selectOneByUserName(String username) {
+        return userMapper.selectOneByUserName(username);
     }
 }

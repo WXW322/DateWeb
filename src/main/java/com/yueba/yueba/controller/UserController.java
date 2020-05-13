@@ -1,6 +1,8 @@
 package com.yueba.yueba.controller;
 
 import com.google.common.collect.Maps;
+import com.yueba.yueba.common.CommonUtils;
+import com.yueba.yueba.common.ImageCodeUtils;
 import com.yueba.yueba.common.JsonResult;
 import com.yueba.yueba.model.User;
 import com.yueba.yueba.service.UserService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -78,16 +81,21 @@ public class UserController {
         userService.update(user);
         return JsonResult.ok();
     }
+
     @ResponseBody
     @RequestMapping("/beVip")
     @ApiOperation(value = "申请会员")
     public JsonResult beVip(Long userId) {
+        if (userId == null || userId == 0) {
+            return JsonResult.ok("申请失败，请先登陆");
+        }
         boolean flag = userVipService.save(userId);
         if (flag) {
             return JsonResult.ok("申请完毕");
         }
-        return JsonResult.ok("请不要重复提交");
+        return JsonResult.ok("管理员审核中，请不要重复提交");
     }
+
     @ResponseBody
     @RequestMapping("/queryAllUserVip")
     @ApiOperation(value = "查询所有的用户申请信息")
@@ -108,6 +116,7 @@ public class UserController {
         userVipService.updateStatus(userId);
         return JsonResult.ok();
     }
+
     @RequestMapping("/profile/{userId}")
     @ApiOperation(value = "用户详情页面")
     public String profile(@PathVariable Long userId, ModelMap modelMap) {
@@ -120,5 +129,31 @@ public class UserController {
         }
         modelMap.put("user", user);
         return "/user/profile";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "/login";
+    }
+
+    @PostMapping("/loginSubmit")
+    @ApiOperation(value = "用户/管理 提交登陆请求 ")
+    @ResponseBody
+    public JsonResult loginSubmit(HttpServletRequest request, String username, String password, String verifyCode, Integer role) {
+        if (CommonUtils.isEmpty(username) || CommonUtils.isEmpty(password) || CommonUtils.isEmpty(verifyCode) || role == null) {
+            return JsonResult.errorMsg("账号密码验证码不能为空");
+        }
+        if (!ImageCodeUtils.checkImageCode(request.getSession(), verifyCode)) {
+            return JsonResult.errorMsg("验证码错误");
+        }
+        val flag = userService.checkLogin(username, password, role);
+        if (flag) {
+            val user = userService.selectOneByUserName(username);
+            request.getSession().setAttribute("user", user);
+            return JsonResult.ok("登陆成功");
+        } else {
+            return JsonResult.errorMsg("登陆失败,账号密码错误");
+        }
     }
 }

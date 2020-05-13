@@ -67,6 +67,12 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("developNext")
+    @ApiOperation(value = "该页面待开发中", notes = "该页面待开发中")
+    public String developNext() {
+        return "/error/405";
+    }
+
     /**
      * 首页2
      *
