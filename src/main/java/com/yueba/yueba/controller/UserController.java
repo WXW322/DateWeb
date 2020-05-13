@@ -56,6 +56,7 @@ public class UserController {
         return JsonResult.ok(userService.queryAll(paramMap));
     }
 
+
     @ResponseBody
     @PostMapping("/edit")
     @ApiOperation(value = "编辑用户基本信息", notes = "编辑用户基本信息 上传用户头像  修改名称  修改其他资料")
@@ -99,8 +100,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/queryAllUserVip")
     @ApiOperation(value = "查询所有的用户申请信息")
-    public JsonResult queryAllUserVip() {
-        return JsonResult.ok(userVipService.queryAll());
+    public JsonResult queryAllUserVip(Integer page,Integer pageSize) {
+        return JsonResult.ok(userVipService.queryAll(page,pageSize));
     }
 
     @ResponseBody

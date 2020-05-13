@@ -17,7 +17,6 @@ public class UserVo {
     public UserVo() {
 
     }
-
     private Long id;
     private String nickname;
     private String face;

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author 徐塬峰
  * @email 986771570@qq.com
@@ -16,8 +18,6 @@ public class UserVipVo {
     private Long id;
     private Long userId;
     private Integer status;
-    /**
-     * 申请人名称
-     */
     private String nickname;
+    private Date createdAt;
 }

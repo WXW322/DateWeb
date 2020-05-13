@@ -1,13 +1,18 @@
 package com.yueba.yueba.service;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.yueba.yueba.common.PageResult;
 import com.yueba.yueba.mapper.UserVipMapper;
 import com.yueba.yueba.model.UserVip;
+import com.yueba.yueba.model.vo.UserVipVo;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,12 +36,21 @@ public class UserVipService {
         UserVip userVip = new UserVip();
         userVip.setStatus(0);
         userVip.setUserId(userId);
+        userVip.setCreatedAt(new Date());
         userVipMapper.insert(userVip);
         return true;
     }
 
-    public List<UserVip> queryAll() {
-        return userVipMapper.selectList(null);
+    public PageResult queryAll(Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        val list = userVipMapper.selectAll();
+        PageInfo<UserVipVo> pageList = new PageInfo<UserVipVo>(list);
+        PageResult pageResult = new PageResult();
+        pageResult.setPage(page);
+        pageResult.setTotal(pageList.getPages());
+        pageResult.setRows(list);
+        pageResult.setRecords(pageList.getTotal());
+        return pageResult;
     }
 
     @Transactional(rollbackFor = Exception.class)

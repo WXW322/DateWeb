@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 
+import java.util.Date;
+
 /**
  * @author 徐塬峰
  * @email 986771570@qq.com
@@ -23,4 +25,5 @@ public class UserVip {
     private Long id;
     private Long userId;
     private Integer status;
+    private Date createdAt;
 }
