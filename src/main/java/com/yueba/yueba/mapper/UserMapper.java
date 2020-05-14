@@ -14,6 +14,8 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where username = #{username} and role = #{role}")
     User selectOneByUserNameAndRole(String username, Integer role);
 
-    @Select("select * from user where username = #{username}")
+    @Select("select * from user where username = #{username} and role !=2  ")
     User selectOneByUserName(String username);
+
+
 }

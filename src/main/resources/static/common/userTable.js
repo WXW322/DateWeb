@@ -123,13 +123,13 @@ var selectAll = function () {
                     }
                     return status;
                 }
-            },{
+            }, {
                 title: '操作',
                 field: 'status',
                 align: 'center',
                 width: '15%',
                 formatter: function (value, row, index) {
-                    var a = '<button class="  btn btn-info btn-xs"   onclick="editById(\'' + row.orgId + '\')""><i class="fa fa-edit" ></i>通过</button> ';
+                    var a = '<button class="  btn btn-info btn-xs" onclick="beVipPass(\'' + row.userId + '\')"><i class="fa fa-edit" ></i>通过</button> ';
                     return a;
                 }
             },
@@ -138,6 +138,23 @@ var selectAll = function () {
     globalCount++;
     returnAllCount();
 };
+
+function beVipPass(userId) {
+    $.ajax({
+        url: ctx + "api/user/beVipPass?userId=" + userId,
+        method: "get",
+        success: function (resp) {
+            if (resp.status == 200) {
+                alert("通过了");
+                $('#allBlog').bootstrapTable('refresh');
+            } else {
+                alert("操作失败");
+                $('#allBlog').bootstrapTable('refresh');
+            }
+        }
+    })
+
+}
 
 // 传参数到后台
 function queryParams(params) {

@@ -100,21 +100,24 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/queryAllUserVip")
     @ApiOperation(value = "查询所有的用户申请信息")
-    public JsonResult queryAllUserVip(Integer page,Integer pageSize) {
-        return JsonResult.ok(userVipService.queryAll(page,pageSize));
+    public JsonResult queryAllUserVip(Integer page, Integer pageSize) {
+        return JsonResult.ok(userVipService.queryAll(page, pageSize));
     }
 
     @ResponseBody
     @RequestMapping("/beVipPass")
     @ApiOperation(value = "通过用户会员信息")
     public JsonResult beVipPass(Long userId) {
+        if (userId == null) {
+            return JsonResult.errorMsg("用户id不存在 ");
+        }
         val user = userService.selectOneById(userId);
         if (user == null) {
             return JsonResult.errorMsg("当前用户不存在");
         }
         user.setRole(1);
         userService.update(user);
-        userVipService.updateStatus(userId);
+        userVipService.updateStatus(user.getId());
         return JsonResult.ok();
     }
 

@@ -72,10 +72,19 @@ public class UserService {
     }
 
     public boolean checkLogin(String username, String password, Integer role) {
-        val user = userMapper.selectOneByUserNameAndRole(username, role);
+        User user = null;
+        //如果是管理员
+        if (role == 2) {
+            user = userMapper.selectOneByUserNameAndRole(username, role);
+        } else {//用户
+            user = userMapper.selectOneByUserName(username);
+        }
+        System.out.println(user);
         if (user == null) {
             return false;
         }
+        System.out.println(CommonUtils.calculateMD5(user.getSalt() + password));
+        System.out.println(user.getPassword());
         if ((CommonUtils.calculateMD5(user.getSalt() + password)).equalsIgnoreCase(user.getPassword())) {
             return true;
         } else {

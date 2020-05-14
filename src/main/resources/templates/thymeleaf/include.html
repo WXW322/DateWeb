@@ -63,13 +63,15 @@
                             <i class="fa fa-sign-out"></i> 登陆
                         </a>
                     </li>
-                    <li th:if="${session.user}!=null" class="dropdown">
+                    <li th:if="${session.user}!=null " class="dropdown">
                         <a aria-expanded="true" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user dropdown">
                                 <span th:text="${session.user.nickname}"></span><span class="caret"></span>
                             </i>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a href="#">个人资料</a>
+                                <li><a href="#" th:if="${session.user.role}!=2">编辑个人资料</a>
+                                </li>
+                                <li><a href="/index" th:if="${session.user.role}==2">切换后台管理</a>
                                 </li>
                                 <li><a href="/login">退出</a>
                                 </li>
