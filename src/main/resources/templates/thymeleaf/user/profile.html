@@ -46,7 +46,7 @@
                                 <p><i class="fa fa-money"></i> 收入:<span th:text="${user.money}"></span></p>
                                 <p><i class="fa fa-apple"></i> 是否是尊享VIP:<span th:text="${user.role==1?'是':'否'}"></span>
                                 </p>
-                                <p><i class="fa fa-volume-up"></i> 描述:<span th:text="${user.description}"></span></p>
+                                <p><i class="fa fa-volume-up"></i> 求偶宣言:<span th:text="${user.description}"></span></p>
                             </div>
                             <div class="clearfix"></div>
                             </a>
@@ -74,6 +74,8 @@
 <script th:src="@{/static/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
 <script th:src="@{/static/js/plugins/flot/jquery.flot.resize.js}"></script>
 <script th:src="@{/static/js/plugins/peity/jquery.peity.min.js}"></script>
+<script th:src="@{/static/plugins/layer/layer.js}"></script>
+<div th:include="include :: index_footer"></div>
 <script>
     function getIt() {
         alert("已关注");
@@ -81,17 +83,6 @@
 
     function sayHello() {
         alert("已打招呼");
-    }
-
-    function beVip() {
-        var userId = $("#userId").val();
-        $.ajax({
-            url: "/api/user/beVip?userId=" + userId,
-            method: "get",
-            success: function (resp) {
-                alert(resp.data);
-            }
-        })
     }
 </script>
 </body>

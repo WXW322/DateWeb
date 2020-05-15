@@ -16,12 +16,12 @@ public class User {
     private String salt;
     private String nickname;
     private String face;
-    private int role;
-    private int male;
-    private int age;
+    private Integer role;
+    private Integer male;
+    private Integer age;
     private String location;
-    private int money;
-    private int height;
+    private Integer money;
+    private Integer height;
     private String description;
     private String major;
 }

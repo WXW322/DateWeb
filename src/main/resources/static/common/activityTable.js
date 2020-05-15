@@ -27,7 +27,7 @@ function queryAll() {
 var selectAll = function () {
     $('#allBlog').bootstrapTable({
         method: 'post',
-        url: ctx + "api/user/queryAllUserVip",
+        url: ctx + "activity/pageList",
         dataType: "json",
         striped: false, // 使表格带有条纹
         pagination: true, // 在表格底部显示分页工具栏
@@ -35,7 +35,7 @@ var selectAll = function () {
         pageNumber: 1,
         sortStable: true,
         sortable: true,
-        pageList: [20, 50, 100],
+        pageList: [10, 20, 50],
         idField: "id", // 标识哪个字段为id主键
         showToggle: true, // 名片格式
         cardView: true, // 设置为True时显示名片（card）布局
@@ -81,35 +81,55 @@ var selectAll = function () {
                 valign: 'middle',
             },
             {
-                title: '用户ID',
+                title: '活动id',
                 align: 'center',
-                field: 'userId',
+                field: 'id',
                 valign: 'middle',
                 width: '6%',
                 formatter: function (value, row, index) {
                     var index1 = index + 1;
-                    var userId = '<span title="ID:' + index1 + '">' + row.userId + '</span>';
-                    return userId;
+                    var id = '<span title="ID:' + index1 + '">' + row.id + '</span>';
+                    return id;
                 }
             },
             {
-                title: '昵称',
-                field: 'nickname',
+                title: '活动名称',
+                field: 'name',
                 align: 'center',
                 width: '6%',
                 formatter: function (value, row, index) {
-                    var nickname = '<span >' + row.nickname + '</span>';
-                    return nickname;
+                    var name = '<span >' + row.name + '</span>';
+                    return name;
                 }
             },
             {
-                title: '申请时间',
+                title: '描述',
+                field: 'description',
+                align: 'center',
+                width: '6%',
+                formatter: function (value, row, index) {
+                    var description = '<span title="ID:' + row.id + '">' + row.description + '</span>';
+                    return description;
+                }
+            },
+            {
+                title: '创建时间',
                 field: 'createdAt',
                 align: 'center',
                 width: '6%',
                 formatter: function (value, row, index) {
                     var createTime = '<span title="ID:' + row.id + '">' + Format(row.createdAt, "yyyy-MM-dd hh:mm:ss") + '</span>';
                     return createTime;
+                }
+            },
+            {
+                title: '开始时间',
+                field: 'startedAt',
+                align: 'center',
+                width: '6%',
+                formatter: function (value, row, index) {
+                    var startedAt = '<span title="ID:' + row.id + '">' + Format(row.startedAt, "yyyy-MM-dd hh:mm:ss") + '</span>';
+                    return startedAt;
                 }
             },
             {
@@ -120,22 +140,16 @@ var selectAll = function () {
                 formatter: function (value, row, index) {
                     var status = row.status;
                     if (status == 0) {
-                        status = '<span class=" badge badge-danger"  >' + '未通过' + '</span>';
+                        status = '<span class=" badge badge-danger"  >' + '未举办' + '</span>';
                     } else if (status == 1) {
-                        status = '<span class="badge badge-primary" >' + '已通过' + '</span>';
+                        status = '<span class="badge badge-warning" >' + '举办中' + '</span>';
+                    }
+                    else if (status == 2) {
+                        status = '<span class="badge badge-primary" >' + '举报完成' + '</span>';
                     }
                     return status;
                 }
-            }, {
-                title: '操作',
-                field: 'status',
-                align: 'center',
-                width: '15%',
-                formatter: function (value, row, index) {
-                    var a = '<button class="  btn btn-info btn-xs" onclick="beVipPass(\'' + row.userId + '\')"><i class="fa fa-edit" ></i>通过</button> ';
-                    return a;
-                }
-            },
+            }
         ]
     });
     globalCount++;

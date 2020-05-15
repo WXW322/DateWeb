@@ -2,19 +2,19 @@ package com.yueba.yueba.controller;
 
 import com.yueba.yueba.common.ImageCodeUtils;
 import com.yueba.yueba.model.SysMenu;
+import com.yueba.yueba.service.ActivityService;
 import com.yueba.yueba.service.SystemMenuService;
 import com.yueba.yueba.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
 /**
  * @author 徐塬峰
  * @email 986771570@qq.com
@@ -28,6 +28,8 @@ public class IndexController {
     private SystemMenuService menuService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ActivityService activityService;
 
     @RequestMapping("/login")
     @ApiOperation(value = "登陆页面", notes = "登陆页面")
@@ -84,6 +86,14 @@ public class IndexController {
 
         modelMap.put("users", userService.queryAll());
         return "index2";
+    }
+
+    @RequestMapping("/project")
+    @ApiOperation(value = "项目")
+    public String project(ModelMap modelMap) {
+        val activityList = activityService.selectAll();
+        modelMap.put("projects", activityList);
+        return "/project";
     }
 
     /**

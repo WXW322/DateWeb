@@ -52,7 +52,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle"> 活动<span
+                        <a aria-expanded="false" role="button" href="/project" class="dropdown-toggle"> 活动<span
                                 class="caret"></span></a>
 
                     </li>
@@ -69,7 +69,7 @@
                                 <span th:text="${session.user.nickname}"></span><span class="caret"></span>
                             </i>
                             <ul role="menu" class="dropdown-menu">
-                                <li><a href="#" th:if="${session.user.role}!=2">编辑个人资料</a>
+                                <li><a href="#" onclick="update()" th:if="${session.user.role}!=2">编辑个人资料</a>
                                 </li>
                                 <li><a href="/index" th:if="${session.user.role}==2">切换后台管理</a>
                                 </li>
@@ -83,7 +83,66 @@
         </nav>
     </div>
 </div>
+<div th:fragment="index_footer">
+    <script>
+        function update() {
+            layer.open({
+                type: 2,
+                area: ['50%', '50%'], //宽高
+                maxmin: true,
+                shadeClose: true,   //点击遮罩关闭
+                btn: ['确定', '关闭'],
+                //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                content: '/api/user/update'
+                , yes: function (index, layero) {
+                    //调用子界面中的表单序列化
+                    var obj = $(layero).find("iframe")[0].contentWindow;
+                    var formData = new FormData(obj.$("#form-post-add")[0]);
+                    $.ajax({
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "/api/user/edit",//url
+                        timeout: 5000, //通过timeout属性，设置超时时间
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        async: false,
+                        mimeType: "multipart/form-data",
+                        data: formData,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.status == 200) {
+                                layer.close(index);
+                                layer.msg('修改成功', {icon: 1});
+                            } else if (result.status == 500) {
+                                layer.alert(result.msg);
+                            }
+                        },
+                        complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+                            if (status == 'timeout') {//超时,status还有success,error等值的情况
+                                layer.close(index);
+                                layer.msg('请求超时');
+                            }
+                        }
+                    })
+                }, btn2: function () {
+                    layer.closeAll();
+                }
+            });
+        }
 
+        function beVip() {
+            var userId = $("#userId").val();
+            $.ajax({
+                url: "/api/user/beVip?userId=" + userId,
+                method: "get",
+                success: function (resp) {
+                    alert(resp.data);
+                }
+            })
+        }
+    </script>
+</div>
 <div th:fragment="footer">
     <a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()} + '/'"
        id="contextPath"></a>

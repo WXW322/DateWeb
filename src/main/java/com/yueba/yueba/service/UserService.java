@@ -79,19 +79,15 @@ public class UserService {
         } else {//用户
             user = userMapper.selectOneByUserName(username);
         }
-        System.out.println(user);
         if (user == null) {
             return false;
         }
-        System.out.println(CommonUtils.calculateMD5(user.getSalt() + password));
-        System.out.println(user.getPassword());
         if ((CommonUtils.calculateMD5(user.getSalt() + password)).equalsIgnoreCase(user.getPassword())) {
             return true;
         } else {
             return false;
         }
     }
-
     public User selectOneByUserName(String username) {
         return userMapper.selectOneByUserName(username);
     }

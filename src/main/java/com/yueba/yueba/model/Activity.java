@@ -1,5 +1,7 @@
 package com.yueba.yueba.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,9 +14,12 @@ import java.util.Date;
  **/
 @Data
 public class Activity {
+    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
     private String name;
     private Date createdAt;
     private String description;
     private String location;
+    private Date startedAt;
+    private Integer status;
 }

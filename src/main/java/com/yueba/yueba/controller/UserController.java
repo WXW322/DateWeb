@@ -20,10 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.UUID;
 
@@ -56,29 +61,43 @@ public class UserController {
         return JsonResult.ok(userService.queryAll(paramMap));
     }
 
+    @RequestMapping("/update")
+    @ApiOperation(value = "用户编辑个人资料")
+    public String update(HttpServletRequest request, ModelMap modelMap) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "/login";
+        }
+        user = userService.selectOneById(user.getId());
+        modelMap.put("user", user);
+        return "/user/update";
+    }
 
     @ResponseBody
-    @PostMapping("/edit")
+    @RequestMapping("/edit")
     @ApiOperation(value = "编辑用户基本信息", notes = "编辑用户基本信息 上传用户头像  修改名称  修改其他资料")
-    public JsonResult upload(Long id, String nickname, Integer male,
+    public JsonResult upload(MultipartHttpServletRequest request, Long id, String nickname,
                              Integer age, String location,
                              Integer money, Integer height,
-                             String description, MultipartFile multipartFile) throws IOException {
-        //处理文件上传
+                             String description) throws IOException {
+        if (id == null) {
+            return JsonResult.errorMsg("缺少必要参数");
+        }
         String filePath = UUID.randomUUID().toString() + ".jpg";
         String fileName = "/image/" + filePath;
-        System.out.println(fileUploadPath);
-        IOUtils.copy(multipartFile.getInputStream(), new FileOutputStream(fileUploadPath + filePath));
         User user = new User();
         user.setId(id);
         user.setNickname(nickname);
-        user.setMale(male);
         user.setAge(age);
         user.setLocation(location);
         user.setMoney(money);
         user.setHeight(height);
         user.setDescription(description);
-        user.setFace(fileName);
+        MultipartFile file = request.getFile("file");
+        if (file != null && file.getSize() > 0) {
+            IOUtils.copy(file.getInputStream(), new FileOutputStream(fileUploadPath + filePath));
+            user.setFace(fileName);
+        }
         userService.update(user);
         return JsonResult.ok();
     }
@@ -141,7 +160,7 @@ public class UserController {
         return "/login";
     }
 
-    @PostMapping("/loginSubmit")
+    @RequestMapping("/loginSubmit")
     @ApiOperation(value = "用户/管理 提交登陆请求 ")
     @ResponseBody
     public JsonResult loginSubmit(HttpServletRequest request, String username, String password, String verifyCode, Integer role) {

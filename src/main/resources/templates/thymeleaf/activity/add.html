@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:include="include :: header"></head>
+<body>
+<div class="ibox-content">
+    <form class="form-horizontal" id="form-post-add">
+        <input id="id" type="hidden"/>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">活动名称</label>
+            <div class="col-sm-8">
+                <input name="name" type="text" id="name" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">活动描述</label>
+            <div class="col-sm-8">
+                <input name="description" type="text" id="description" placeholder="活动描述" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">活动地点</label>
+            <div class="col-sm-8">
+                <input name="locaiton" type="text" id="locaiton" placeholder="活动地点" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">活动开始时间</label>
+            <div class="col-sm-8">
+                <input name="startedAt" type="text" id="startedAt" placeholder="活动开始时间" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">启用状态：</label>
+            <div class="col-sm-8">
+                <select class="form-control m-b" id="status" name="status">
+                    <option value="0">未举办</option>
+                    <option value="1">举办中</option>
+                    <option value="2">举办完成</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include :: footer"></div>
+<script>
+    laydate.render({
+        elem: '#startedAt' //指定元素
+    });
+</script>
+</body>
+</html>

@@ -34,7 +34,7 @@
                                 <h3><strong th:text="${user.nickname}"></strong></h3>
                                 <p><i class="fa fa-map-marker"></i> <span th:text="${user.location}"></span></p>
                             </a>
-                                <address><a href="/api/user/profile" class="J_menuItem">
+                                <address><a th:href="@{'/api/user/profile/'+${user.id}}" class="J_menuItem">
                                     身高:<span th:text="${user.height}"></span>cm<br>年龄
                                     <span th:text="${user.age}"></span>岁
                                     <br>
@@ -84,18 +84,7 @@
         });
     })
 </script>
-<script>
-    function beVip() {
-        var userId = $("#userId").val();
-        $.ajax({
-            url: "/api/user/beVip?userId=" + userId,
-            method: "get",
-            success: function (resp) {
-                alert(resp.data);
-            }
-        })
-    }
-</script>
+<div th:include="include :: index_footer"></div>
 </body>
 <!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
 </html>
