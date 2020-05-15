@@ -88,7 +88,14 @@ public class UserService {
             return false;
         }
     }
+
     public User selectOneByUserName(String username) {
         return userMapper.selectOneByUserName(username);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void insert(User user) {
+        userMapper.insert(user);
+
     }
 }

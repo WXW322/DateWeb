@@ -33,7 +33,7 @@
         </div>
         <div class="col-sm-5">
             <form>
-                <h4 class="no-margins">单身中还没账号？ <a href="">立即注册</a></h4>
+                <h4 class="no-margins">单身中还没账号？ <a href="#" onclick="register()">立即注册</a></h4>
                 <p class="m-t-md">登陆<span></span><a href="/">约吧同城</a></p>
                 <input type="text" name="username" class="form-control uname" id="username" placeholder="用户名"
                        required=""/>
@@ -46,8 +46,8 @@
                                                 onclick="changeCode()"/> <span>
 						</span>
                 <select class="form-control" style="color:black" id="role">
-                    <option value ="0">用户登陆</option>
-                    <option value ="2">管理员登陆</option>
+                    <option value="0">用户登陆</option>
+                    <option value="2">管理员登陆</option>
                 </select>
                 <button class="btn btn-success btn-block" type="button" id="submit">登录</button>
             </form>
@@ -66,4 +66,50 @@
 <script th:src="@{/static/plugins/layer/layer.js}"></script>
 <script th:inline="javascript"> var ctx = $('#contextPath').attr('href'); </script>
 <script th:src="@{/static/utils/login.js}"></script>
+<script>
+    function register() {
+        layer.open({
+            type: 2,
+            area: ['80%', '80%'], //宽高
+            maxmin: true,
+            shadeClose: true,   //点击遮罩关闭
+            btn: ['确定', '关闭'],
+            //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            content: '/api/user/register'
+            , yes: function (index, layero) {
+                var obj = $(layero).find("iframe")[0].contentWindow;
+                var formData = new FormData(obj.$("#form-post-add")[0]);
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/api/user/registerSubmit",//url
+                    timeout: 5000, //通过timeout属性，设置超时时间
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    mimeType: "multipart/form-data",
+                    data: formData,
+                    success: function (result) {
+                        console.log(result);
+                        if (result.status == 200) {
+                            alert('注册成功', {icon: 1});
+                            layer.close(index);
+                        } else if (result.status == 500) {
+                            alert(result.msg);
+                        }
+                    },
+                    complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+                        if (status == 'timeout') {//超时,status还有success,error等值的情况
+                            layer.close(index);
+                            layer.msg('请求超时');
+                        }
+                    }
+                })
+            }, btn2: function () {
+                layer.closeAll();
+            }
+        });
+    }
+</script>
 </html>

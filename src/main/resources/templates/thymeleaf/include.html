@@ -112,8 +112,8 @@
                         success: function (result) {
                             console.log(result);
                             if (result.status == 200) {
-                                layer.close(index);
                                 layer.msg('修改成功', {icon: 1});
+                                layer.close(index);
                             } else if (result.status == 500) {
                                 layer.alert(result.msg);
                             }

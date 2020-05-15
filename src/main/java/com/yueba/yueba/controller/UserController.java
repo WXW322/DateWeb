@@ -61,6 +61,47 @@ public class UserController {
         return JsonResult.ok(userService.queryAll(paramMap));
     }
 
+    @RequestMapping("/register")
+    @ApiOperation(value = "注册")
+    public String register() {
+        return "/user/register";
+    }
+
+    @RequestMapping("/registerSubmit")
+    @ResponseBody
+    @ApiOperation(value = "注册提交")
+    public JsonResult registerSubmit(MultipartHttpServletRequest request, String username, String password, String nickname,
+                                     Integer age, String location,
+                                     Integer money, Integer height,
+                                     String description) throws IOException {
+        String filePath = UUID.randomUUID().toString() + ".jpg";
+        String fileName = "/image/" + filePath;
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(CommonUtils.calculateMD5("111111" + password));
+        user.setNickname(nickname);
+        user.setAge(age);
+        user.setLocation(location);
+        user.setMoney(money);
+        user.setHeight(height);
+        user.setSalt("111111");
+        user.setRole(0);
+
+        user.setDescription(description);
+        MultipartFile file = request.getFile("file");
+        if (file != null && file.getSize() > 0) {
+            IOUtils.copy(file.getInputStream(), new FileOutputStream(fileUploadPath + filePath));
+            user.setFace(fileName);
+        }
+        val old = userService.selectOneByUserName(username);
+        if (old == null) {
+            return JsonResult.errorMsg("当前账号已存在，换一个账号名试试");
+        }
+        userService.insert(user);
+        return JsonResult.ok();
+    }
+
+
     @RequestMapping("/update")
     @ApiOperation(value = "用户编辑个人资料")
     public String update(HttpServletRequest request, ModelMap modelMap) {
