@@ -73,7 +73,7 @@ public class UserController {
     @ApiOperation(value = "注册提交")
     public JsonResult registerSubmit(MultipartHttpServletRequest request, String username, String password, String nickname,
                                      Integer age, String location,
-                                     Integer money, Integer height,
+                                     Integer money, Integer height, Integer male, String major,
                                      String description) throws IOException {
         String filePath = UUID.randomUUID().toString() + ".jpg";
         String fileName = "/image/" + filePath;
@@ -87,7 +87,8 @@ public class UserController {
         user.setHeight(height);
         user.setSalt("111111");
         user.setRole(0);
-
+        user.setMale(male);
+        user.setMajor(major);
         user.setDescription(description);
         MultipartFile file = request.getFile("file");
         if (file != null && file.getSize() > 0) {
