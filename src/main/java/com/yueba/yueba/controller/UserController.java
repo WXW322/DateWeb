@@ -95,7 +95,7 @@ public class UserController {
             user.setFace(fileName);
         }
         val old = userService.selectOneByUserName(username);
-        if (old == null) {
+        if (old != null) {
             return JsonResult.errorMsg("当前账号已存在，换一个账号名试试");
         }
         userService.insert(user);
