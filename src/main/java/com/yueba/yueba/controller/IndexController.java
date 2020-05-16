@@ -2,6 +2,7 @@ package com.yueba.yueba.controller;
 
 import com.yueba.yueba.common.ImageCodeUtils;
 import com.yueba.yueba.model.SysMenu;
+import com.yueba.yueba.model.vo.UserVo;
 import com.yueba.yueba.service.ActivityService;
 import com.yueba.yueba.service.SystemMenuService;
 import com.yueba.yueba.service.UserService;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
 /**
  * @author 徐塬峰
  * @email 986771570@qq.com
@@ -87,6 +90,21 @@ public class IndexController {
         modelMap.put("users", userService.queryAll());
         return "index2";
     }
+
+    @RequestMapping("/search")
+    @ApiOperation(value = "搜索查找")
+    public String search() {
+        return "/search";
+    }
+
+    @RequestMapping("/searchForm")
+    @ApiOperation(value = "搜索查找")
+    public String searchForm(Integer startAge, Integer endAge, Integer startMoney, Integer endMoney, Integer male, ModelMap modelMap) {
+        List<UserVo> userVos = userService.search(startAge, endAge, startMoney, endMoney, male);
+        modelMap.put("users", userVos);
+        return "/search";
+    }
+
 
     @RequestMapping("/project")
     @ApiOperation(value = "项目")

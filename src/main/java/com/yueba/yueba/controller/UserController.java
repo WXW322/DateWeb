@@ -7,6 +7,7 @@ import com.yueba.yueba.common.JsonResult;
 import com.yueba.yueba.model.User;
 import com.yueba.yueba.service.UserService;
 import com.yueba.yueba.service.UserVipService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import lombok.val;

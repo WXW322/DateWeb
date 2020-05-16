@@ -2,6 +2,7 @@ package com.yueba.yueba.service;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
+import com.sun.org.apache.xpath.internal.operations.Gt;
 import com.yueba.yueba.common.CommonUtils;
 import com.yueba.yueba.mapper.UserMapper;
 import com.yueba.yueba.model.User;
@@ -97,5 +98,27 @@ public class UserService {
     public void insert(User user) {
         userMapper.insert(user);
 
+    }
+
+    public List<UserVo> search(Integer startAge, Integer endAge, Integer startMoney, Integer endMoney, Integer male) {
+
+        val queryWrappers = Wrappers.<User>lambdaQuery();
+        if (startAge != null || endAge != null) {
+            queryWrappers.between(User::getAge, startAge, endAge);
+        }
+        if (startMoney != null || endMoney != null) {
+            queryWrappers.between(User::getMoney, startMoney, endMoney);
+        }
+        if (male != null) {
+            queryWrappers.eq(User::getMale, male);
+        }
+        val userList = userMapper.selectList(queryWrappers);
+        List<UserVo> userVos = Lists.newArrayList();
+        userList.stream().forEach(user -> {
+            UserVo userVo = new UserVo();
+            BeanUtils.copyProperties(user, userVo);
+            userVos.add(userVo);
+        });
+        return userVos;
     }
 }
