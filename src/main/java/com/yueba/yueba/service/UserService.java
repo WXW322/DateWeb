@@ -102,7 +102,7 @@ public class UserService {
 
     public List<UserVo> search(Integer startAge, Integer endAge, Integer startMoney, Integer endMoney, Integer male) {
 
-        val queryWrappers = Wrappers.<User>lambdaQuery();
+        val queryWrappers = Wrappers.<User>lambdaQuery().ne(User::getRole,2);
         if (startAge != null || endAge != null) {
             queryWrappers.between(User::getAge, startAge, endAge);
         }
