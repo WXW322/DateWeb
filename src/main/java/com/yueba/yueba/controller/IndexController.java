@@ -94,7 +94,7 @@ public class IndexController {
     @RequestMapping("/search")
     @ApiOperation(value = "搜索查找")
     public String search() {
-        return "/search";
+        return "search";
     }
 
     @RequestMapping("/searchForm")
@@ -111,7 +111,7 @@ public class IndexController {
     public String project(ModelMap modelMap) {
         val activityList = activityService.selectAll();
         modelMap.put("projects", activityList);
-        return "/project";
+        return "project";
     }
 
     /**
