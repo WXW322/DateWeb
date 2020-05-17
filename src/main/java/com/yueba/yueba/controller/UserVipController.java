@@ -16,6 +16,6 @@ public class UserVipController {
     @RequestMapping("/list")
     @ApiOperation(value = "用户列表")
     public String list() {
-        return "/userVip/list";
+        return "userVip/list";
     }
 }

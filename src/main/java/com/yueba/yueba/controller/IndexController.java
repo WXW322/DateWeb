@@ -102,7 +102,7 @@ public class IndexController {
     public String searchForm(Integer startAge, Integer endAge, Integer startMoney, Integer endMoney, Integer male, ModelMap modelMap) {
         List<UserVo> userVos = userService.search(startAge, endAge, startMoney, endMoney, male);
         modelMap.put("users", userVos);
-        return "/search";
+        return "search";
     }
 
 

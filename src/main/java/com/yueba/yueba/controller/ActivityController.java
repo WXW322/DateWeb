@@ -41,7 +41,7 @@ public class ActivityController {
     @RequestMapping("/list")
     @ApiOperation(value = "用户列表")
     public String list() {
-        return "/activity/list";
+        return "activity/list";
     }
 
     @RequestMapping("/pageList")
@@ -60,7 +60,7 @@ public class ActivityController {
 
     @RequestMapping("/add")
     public String add() {
-        return "/activity/add";
+        return "activity/add";
     }
 
 

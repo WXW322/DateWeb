@@ -109,11 +109,11 @@ public class UserController {
     public String update(HttpServletRequest request, ModelMap modelMap) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            return "/login";
+            return "login";
         }
         user = userService.selectOneById(user.getId());
         modelMap.put("user", user);
-        return "/user/update";
+        return "user/update";
     }
 
     @ResponseBody
@@ -187,20 +187,20 @@ public class UserController {
     @ApiOperation(value = "用户详情页面")
     public String profile(@PathVariable Long userId, ModelMap modelMap) {
         if (userId == null) {
-            return "/error/500";
+            return "error/500";
         }
         val user = userService.selectOneById(userId);
         if (user == null) {
-            return "/error/500";
+            return "error/500";
         }
         modelMap.put("user", user);
-        return "/user/profile";
+        return "user/profile";
     }
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/loginSubmit")
