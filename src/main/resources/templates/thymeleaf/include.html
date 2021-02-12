@@ -1,0 +1,176 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link th:href="@{/static/css/bootstrap.min14ed.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/plugins/bootstrap-treetable/bootstrap-treetable.css}" rel="stylesheet"/>
+    <link th:href="@{/static/plugins/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/css/font-awesome.min93e3.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/style.min862f.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/static/css/select.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/xuan.css}" rel="stylesheet"/>
+    <link th:href="@{/static/css/fakeLoader.css}" rel="stylesheet">
+</head>
+<div th:fragment="container">
+    <input th:value="${session.user}==null?0:${session.user.id}" type="hidden" id="userId"/>
+    <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                        class="navbar-toggle collapsed" type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+                <a href="/" class="navbar-brand">约吧同城</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/" class="dropdown-toggle"
+                        > 约吧 <span class="caret"></span></a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/search" class="dropdown-toggle"
+                        > 搜索 <span class="caret"></span></a>
+
+                    </li>
+                    <li class="dropdown ">
+                        <a aria-expanded="true" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            会员 <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="#" onclick="beVip()">申请会员</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/project" class="dropdown-toggle"> 活动<span
+                                class="caret"></span></a>
+
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li th:if="${session.user}==null">
+                        <a href="/login">
+                            <i class="fa fa-sign-out"></i> 登陆
+                        </a>
+                    </li>
+                    <li th:if="${session.user}!=null " class="dropdown">
+                        <a aria-expanded="true" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user dropdown">
+                                <span th:text="${session.user.nickname}"></span><span class="caret"></span>
+                            </i>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a href="#" onclick="update()" th:if="${session.user.role}!=2">编辑个人资料</a>
+                                </li>
+                                <li><a href="/index" th:if="${session.user.role}==2">切换后台管理</a>
+                                </li>
+                                <li><a href="/login">退出</a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div th:fragment="index_footer">
+    <script>
+        function update() {
+            layer.open({
+                type: 2,
+                area: ['50%', '50%'], //宽高
+                maxmin: true,
+                shadeClose: true,   //点击遮罩关闭
+                btn: ['确定', '关闭'],
+                //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                content: '/api/user/update'
+                , yes: function (index, layero) {
+                    //调用子界面中的表单序列化
+                    var obj = $(layero).find("iframe")[0].contentWindow;
+                    var formData = new FormData(obj.$("#form-post-add")[0]);
+                    $.ajax({
+                        type: "POST",//方法类型
+                        dataType: "json",//预期服务器返回的数据类型
+                        url: "/api/user/edit",//url
+                        timeout: 5000, //通过timeout属性，设置超时时间
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        async: false,
+                        mimeType: "multipart/form-data",
+                        data: formData,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.status == 200) {
+                                layer.msg('修改成功', {icon: 1});
+                                layer.close(index);
+                            } else if (result.status == 500) {
+                                layer.alert(result.msg);
+                            }
+                        },
+                        complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+                            if (status == 'timeout') {//超时,status还有success,error等值的情况
+                                layer.close(index);
+                                layer.msg('请求超时');
+                            }
+                        }
+                    })
+                }, btn2: function () {
+                    layer.closeAll();
+                }
+            });
+        }
+
+        function beVip() {
+            var userId = $("#userId").val();
+            $.ajax({
+                url: "/api/user/beVip?userId=" + userId,
+                method: "get",
+                success: function (resp) {
+                    alert(resp.data);
+                }
+            })
+        }
+    </script>
+</div>
+<div th:fragment="footer">
+    <a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()} + '/'"
+       id="contextPath"></a>
+    <!-- 全局js -->
+    <script th:src="@{/static/js/jquery.min.js}"></script>
+    <script th:src="@{/static/plugins/layer/layer.js}"></script>
+    <!--日期控件 -->
+    <script th:src="@{/static/plugins/laydate/laydate.js}"></script>
+    <script th:src="@{/static/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/contabs.js}"></script>
+    <script th:src="@{/static/js/fakeLoader.min.js}"></script>
+    <!-- Bootstrap table -->
+    <script th:src="@{/static/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- 自定义js -->
+    <!-- <script th:inline="javascript"> var ctx = [[@{/}]]; </script> -->
+    <script th:inline="javascript"> var ctx = $('#contextPath').attr('href'); </script>
+    <script th:src="@{/static/utils/utils.js}"></script>
+    <!-- jquery-validate 表单验证插件 -->
+    <script th:src="@{/static/plugins/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/static/plugins/validate/messages_zh.min.js}"></script>
+    <script th:src="@{/static/plugins/validate/jquery.validate.extend.js}"></script>
+    <!-- jquery-export 表格导出插件 -->
+    <script th:src="@{/static/plugins/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
+    <script th:src="@{/static/plugins/bootstrap-table/extensions/export/tableExport.js}"></script>
+    <!--全屏js-->
+    <script th:src="@{/static/plugins/fullscreen/jquery.fullscreen.js}"></script>
+    <script th:src="@{/static/utils/xuan.js}"></script>
+    <script th:src="@{/static/utils/ry-ui.js}"></script>
+</div>

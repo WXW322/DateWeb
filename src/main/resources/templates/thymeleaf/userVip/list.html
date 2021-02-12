@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div th:include="include :: head"></div>
+<body>
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>会员申请队列</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+                </a> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i
+                    class="fa fa-wrench"></i>
+            </a>
+                <a class="close-link"> <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="example">
+                    <table id="allBlog" data-mobile-responsive="true" class="fa-border">
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:src="@{/static/common/userTable.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        selectAll();
+    });
+</script>
+</body>
+</html>

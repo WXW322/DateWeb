@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>约吧同城 - 登录</title>
+    <meta name="keywords" content="后台管理系统">
+    <meta name="description" content="后台管理系统">
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/login.min.css}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+</head>
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="signin-info">
+                <div class="logopanel m-b">
+                </div>
+                <div class="m-b"></div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <form>
+                <h4 class="no-margins">单身中还没账号？ <a href="#" onclick="register()">立即注册</a></h4>
+                <p class="m-t-md">登陆<span></span><a href="/">约吧同城</a></p>
+                <input type="text" name="username" class="form-control uname" id="username" placeholder="用户名"
+                       required=""/>
+                <input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码"
+                       required=""/>
+                <input style="width: 110px; height: 30px; color: black; font-size: 14px;padding-left:10px;"
+                       type="text" id="verifyCode" placeholder="验证码"
+                       name="verifyCode"/> <img width="104" height="30" style="margin-left: 15px;"
+                                                src="/imageCode" id="verifyCodeImage"
+                                                onclick="changeCode()"/> <span>
+						</span>
+                <select class="form-control" style="color:black" id="role">
+                    <option value="0">用户登陆</option>
+                    <option value="2">管理员登陆</option>
+                </select>
+                <button class="btn btn-success btn-block" type="button" id="submit">登录</button>
+            </form>
+        </div>
+    </div>
+    <div class="signup-footer">
+        <div class="pull-left">
+            &copy; 2020 All Rights Reserved. <br>
+        </div>
+    </div>
+</div>
+</body>
+<a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()} + '/'"
+   id="contextPath"></a>
+<script th:src="@{/static/js/jquery.min.js}"></script>
+<script th:src="@{/static/plugins/layer/layer.js}"></script>
+<script th:inline="javascript"> var ctx = $('#contextPath').attr('href'); </script>
+<script th:src="@{/static/utils/login.js}"></script>
+<script>
+    function register() {
+        layer.open({
+            type: 2,
+            area: ['80%', '80%'], //宽高
+            maxmin: true,
+            shadeClose: true,   //点击遮罩关闭
+            btn: ['确定', '关闭'],
+            //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+            content: '/api/user/register'
+            , yes: function (index, layero) {
+                var obj = $(layero).find("iframe")[0].contentWindow;
+                var formData = new FormData(obj.$("#form-post-add")[0]);
+                $.ajax({
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "/api/user/registerSubmit",//url
+                    timeout: 5000, //通过timeout属性，设置超时时间
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    mimeType: "multipart/form-data",
+                    data: formData,
+                    success: function (result) {
+                        console.log(result);
+                        if (result.status == 200) {
+                            alert('注册成功', {icon: 1});
+                            layer.close(index);
+                        } else if (result.status == 500) {
+                            alert(result.msg);
+                        }
+                    },
+                    complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数
+                        if (status == 'timeout') {//超时,status还有success,error等值的情况
+                            layer.close(index);
+                            layer.msg('请求超时');
+                        }
+                    }
+                })
+            }, btn2: function () {
+                layer.closeAll();
+            }
+        });
+    }
+</script>
+</html>

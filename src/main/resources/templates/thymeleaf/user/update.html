@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>约吧首页</title>
+    <link th:href="@{/static/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+</head>
+<body>
+<div class="ibox-content">
+    <form id="form-post-add" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <input name="id" id="id" class="form-control col-sm-4" type="hidden" th:value="${user.id}">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><p><i class="fa fa-apple"></i> 是否是尊享VIP:<span
+                    th:text="${user.role==1?'是':'否'}"></span></label>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">昵称:</label>
+            <div class="col-sm-8">
+                <input name="nickname" id="nickname" class="form-control col-sm-4" th:value="${user.nickname}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">居住地:</label>
+            <div class="col-sm-8">
+                <input name="location" id="location" class="form-control col-sm-4" th:value="${user.location}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">年龄:</label>
+            <div class="col-sm-8">
+                <input id="age" name="age" class="form-control col-sm-4" th:value="${user.age}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">身高:</label>
+            <div class="col-sm-8">
+                <input name="height" id="height" class="form-control col-sm-4" th:value="${user.height}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">收入:</label>
+            <div class="col-sm-8">
+                <input name="money" id="money" class="form-control col-sm-4" th:value="${user.money}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">求偶宣言:</label>
+            <div class="col-sm-8">
+                <input name="description" id="description" class="form-control col-sm-4" th:value="${user.description}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">求偶宣言:</label>
+            <div class="col-sm-8">
+                <input name="file" id="file" type="file" class="form-control col-sm-4" multiple="multiple">
+            </div>
+        </div>
+    </form>
+</div>
+<script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/static/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.resize.js}"></script>
+<script th:src="@{/static/js/plugins/peity/jquery.peity.min.js}"></script>
+<div th:include="include :: index_footer"></div>
+</body>
+</html>

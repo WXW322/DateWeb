@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="middle-box text-center animated fadeInDown">
+    <h1>403</h1>
+    <h3 class="font-bold">授权失败！</h3>
+    <div class="error-desc">
+        当前店铺授权失败，请返回重新授权
+        <a href="https://mini.wenduwaimai.com/eleservice/wendu/">
+            <button>授权</button>
+        </a>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+</body>
+</html>

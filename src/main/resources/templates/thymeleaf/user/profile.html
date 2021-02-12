@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:51 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>约吧首页</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/static/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+</head>
+<body class="gray-bg top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div th:include="include :: container"></div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <div class="col-sm-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>个人信息</h5>
+                            <div class="ibox-tools">
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="javascript:edit()">修改信息</a></li>
+                                    <li><a href="javascript:resetPwd()">修改密码</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="contact-box">
+                            <div class="col-sm-4">
+                                <div class="text-center">
+                                    <img alt="image" class="img-circle m-t-xs img-responsive" th:src="${user.face}">
+                                    <div class="m-t-xs font-bold"><span th:text="${user.major}"></span></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <h3><strong th:text="${user.nickname}"></strong></h3>
+                                <p><i class="fa fa-user"> 居住地:<span th:text="${user.location}"></span></i>
+                                <p><i class="fa fa-angellist"></i> 年龄:<span th:text="${user.age}"></span></p>
+                                <p><i class="fa fa-male"></i> 性别:<span th:text="${user.male==1?'女':'男'}"></span></p>
+                                <p><i class="fa fa-group"></i> 身高:<span th:text="${user.height}"></span></p>
+                                <p><i class="fa fa-money"></i> 收入:<span th:text="${user.money}"></span></p>
+                                <p><i class="fa fa-apple"></i> 是否是尊享VIP:<span th:text="${user.role==1?'是':'否'}"></span>
+                                </p>
+                                <p><i class="fa fa-volume-up"></i> 求偶宣言:<span th:text="${user.description}"></span></p>
+                            </div>
+                            <div class="clearfix"></div>
+                            </a>
+                            <button class="btn-primary" onclick="getIt()">关注他</button>
+                            <button class="btn-primary" onclick="sayHello()">打个招呼</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+            </div>
+            <div>
+                <strong>Copyright</strong> 约吧 &copy; 2020
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/static/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.resize.js}"></script>
+<script th:src="@{/static/js/plugins/peity/jquery.peity.min.js}"></script>
+<script th:src="@{/static/plugins/layer/layer.js}"></script>
+<div th:include="include :: index_footer"></div>
+<script>
+    function getIt() {
+        alert("已关注");
+    }
+
+    function sayHello() {
+        alert("已打招呼");
+    }
+</script>
+</body>
+</html>

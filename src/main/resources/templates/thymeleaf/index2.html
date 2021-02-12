@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:51 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>约吧首页</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/static/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/static/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/static/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+</head>
+<body class="gray-bg top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div th:include="include :: container"></div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4" th:each="user : ${users}">
+                        <div class="contact-box">
+                            <a th:href="@{'/api/user/profile/'+${user.id}}">
+                                <div class="col-sm-4">
+                                    <div class="text-center">
+                                        <img alt="image" class="img-circle m-t-xs img-responsive"
+                                             th:src="${user.face}">
+                                        <div class="m-t-xs font-bold"><span th:text="${user.major}"></span></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="col-sm-8"><a th:href="@{'/api/user/profile/'+${user.id}}">
+                                <h3><strong th:text="${user.nickname}"></strong></h3>
+                                <p><i class="fa fa-map-marker"></i> <span th:text="${user.location}"></span></p>
+                            </a>
+                                <address><a th:href="@{'/api/user/profile/'+${user.id}}" class="J_menuItem">
+                                    身高:<span th:text="${user.height}"></span>cm<br>年龄
+                                    <span th:text="${user.age}"></span>岁
+                                    <br>
+                                    简介:</a><a href="#"><span th:text="${user.description}"></span></a><br>
+                                </address>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <strong>Copyright</strong> 约吧 &copy; 2020
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/static/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+<script th:src="@{/static/js/plugins/flot/jquery.flot.resize.js}"></script>
+<script th:src="@{/static/js/plugins/chartJs/Chart.min.js}"></script>
+<script th:src="@{/static/js/plugins/peity/jquery.peity.min.js}"></script>
+<script th:src="@{/static/js/demo/peity-demo.min.js}"></script>
+<script th:src="@{/static/plugins/layer/layer.js}"></script>
+<script>
+    $(document).ready(function () {
+        var random = Math.round(Math.random());
+        var videoUrl = "/static/mp4/4.mp4";
+        if (random == 1) {
+            videoUrl = "/static/mp4/4.mp4";
+        } else {
+            videoUrl = "/static/mp4/10.mp4";
+        }
+        layer.open({
+            type: 1,
+            skin: 'layer-alert-video',
+            shadeClose: true,
+            anim: 0,
+            title: false,
+            content: '<video width="100%" height="100%"  controls="controls" autobuffer="autobuffer"  autoplay="autoplay" loop="loop"><source src="' + videoUrl + '" type="video/mp4"></source></video>'
+        });
+    })
+</script>
+<div th:include="include :: index_footer"></div>
+</body>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
+</html>
